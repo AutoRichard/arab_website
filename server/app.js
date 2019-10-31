@@ -20,7 +20,7 @@ app.use(cors());
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   console.log(1);
 })
 
