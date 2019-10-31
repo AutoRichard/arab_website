@@ -3,7 +3,7 @@ import app from './app';
 import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise
-const uri = "mongodb+srv://richard01:seun08167739200@richard01-xsh4r.mongodb.net/test";
+const uri = "mongodb+srv://richard01:seun08167739200@richard01-xsh4r.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri)
 //mongoose.connect(config.mongoUri)
 mongoose.connection.on('error', () => {

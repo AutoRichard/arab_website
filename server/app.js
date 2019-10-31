@@ -20,6 +20,10 @@ app.use(cors());
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 
+app.get('*', (req, res) => {
+  console.log(1);
+})
+
 
 
 app.use((err, req, res, next) => {
