@@ -8,6 +8,16 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     required: 'Name is required'
   },
+  first_name: {
+    type: String,
+    trim: true,
+    required: 'First Name is required'
+  },
+  last_name:{
+    type: String,
+    trim: true,
+    required: 'Last Name is required'
+  },
   email: {
     type: String,
     trim: true,
@@ -29,6 +39,10 @@ const UserSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+  accountType: {
+    type: String,
+    required: "Account is required"
+  }
 });
 
 UserSchema.virtual('password').set(function (password) {

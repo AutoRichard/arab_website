@@ -5,4 +5,4 @@ const config = {
     mongoUri: process.env.MONGODB_URI || process.env.MONGODB_HOST || 'mongodb://' + (process.env.IP || 'localhost') + ':' + (process.env.MONGODB_PORT || '27017') + '/project'
 }
 
-export default config;
+export default config; 

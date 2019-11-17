@@ -5,7 +5,9 @@ import compress from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import userRoutes from './routes/user.route';
-import authRoutes from './routes/auth.route';
+import authRoutes from './routes/auth.route'; 
+import blogRoutes from './routes/blog.route';
+import forumRoutes from './routes/forum.route';
 
 
 const app = express();
@@ -19,7 +21,8 @@ app.use(cors());
 
 app.use('/', userRoutes);
 app.use('/', authRoutes);
-
+app.use('/', blogRoutes);
+app.use('/', forumRoutes);
 app.get('/', (req, res) => {
   console.log(1);
 })

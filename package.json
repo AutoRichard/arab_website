@@ -23,11 +23,13 @@
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "file-loader": "^4.2.0",
     "formidable": "^1.2.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "mongoose": "^5.7.7"
+    "mongoose": "^5.7.7",
+    "validator": "^12.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -35,7 +37,7 @@
     "@babel/register": "^7.6.2",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",    
+    "babel-register": "^6.26.0",
     "nodemon": "^1.19.4",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1",

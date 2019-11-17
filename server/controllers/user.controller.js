@@ -18,16 +18,15 @@ const create = (req, res, next) => {
   });
 }
 
-
 const userByID = (req, res, next, id) => {
   User.findById(id)
     .exec((err, user) => {
-    if (err || !user) return res.status('400').json({
-      error: "User not found"
+      if (err || !user) return res.status('400').json({
+        error: "User not found"
+      });
+      req.profile = user;
+      next();
     });
-    req.profile = user;
-    next();
-  });
 }
 
 const read = (req, res) => {
@@ -48,32 +47,19 @@ const list = (req, res) => {
 }
 
 const update = (req, res, next) => {
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-  form.parse(req, (err, fields, files) => {
+  let user = req.profile;
+  user = _.extend(user, fields);
+  user.updated = Date.now();
+  user.save((err, result) => {
     if (err) {
       return res.status(400).json({
-        error: "Photo could not be uploaded"
+        error: errorHandler.getErrorMessage(err)
       });
     }
-    let user = req.profile;
-    user = _.extend(user, fields);
-    user.updated = Date.now();
-    if(files.photo){
-      user.photo.data = fs.readFileSync(files.photo.path);
-      user.photo.contentType = files.photo.type;
-    }
-    user.save((err, result) => {
-      if (err) {
-        return res.status(400).json({
-          error: errorHandler.getErrorMessage(err)
-        });
-      }
-      user.hashed_password = undefined;
-      user.salt = undefined;
-      res.json(user);
-    })
-  })
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.json(user);
+  });
 }
 
 const remove = (req, res, next) => {
