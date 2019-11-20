@@ -6,24 +6,24 @@ const router = express.Router();
 
 //create new forum and list all
 router.route('/api/forum')
-  .get(forumCtrl.list)
-  .post(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl.create);
+  .get(authCtrl.requireSignin, forumCtrl.list)
+  .post(authCtrl.requireSignin, forumCtrl.create);
 
 //read specific forum, update and delete
 router.route('/api/forum/:forumId')
   .get(authCtrl.requireSignin, forumCtrl.read)
-  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl.update)
-  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl.remove);
+  .put(authCtrl.requireSignin, forumCtrl.update)
+  .delete(authCtrl.requireSignin, forumCtrl.remove);
 
 //comment and delete comment
 router.route('/api/message')
-  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl._postMessage)
-  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl._deleteMessage)
+  .put(authCtrl.requireSignin, forumCtrl._postMessage)
+  .delete(authCtrl.requireSignin, forumCtrl._deleteMessage)
 
 //reply to a specific comment and delete reply
 router.route('/api/replymessage')
-  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl._replyMessage)
-  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl._replyDeleteMessage);
+  .put(authCtrl.requireSignin, forumCtrl._replyMessage)
+  .delete(authCtrl.requireSignin, forumCtrl._replyDeleteMessage);
 
 //return all category
 router.route('/api/categories')
@@ -31,10 +31,13 @@ router.route('/api/categories')
 
 //return based on category
 router.route('/api/category')
-  .post(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl.listForumByCategory);
+  .post(authCtrl.requireSignin, forumCtrl.listForumByCategory);
 
 router.route('/api/userForum')
-  .post(authCtrl.requireSignin, authCtrl.hasAuthorization, forumCtrl.listForumByUser);
+  .post(authCtrl.requireSignin, forumCtrl.listForumByUser);
+
+router.route('/api/forumPhoto/:blogId')
+  .get(authCtrl.requireSignin, forumCtrl.photo);
 
 
 //fetch specific forum

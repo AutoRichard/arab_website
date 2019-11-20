@@ -1,0 +1,89 @@
+ARAB BACKEND
+
+
+Sign Up (multipart/form-data) => rootUrl/api/users POST (params: first_name, last_name, name, email, password, photo, accountType(admin or user))
+
+Sign In(application/json) => rootUrl/auth/signin (params: email, password) POST
+
+__USER
+To get all users => rootUrl/api/users GET
+{
+    After Authentication pass this below all to request
+    [header Authorization Bearer {token}]
+
+    __save return auth credentials like this below
+
+    {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGQ1MTBhMzYzOGNmNDIzMjQ4MDY3YzIiLCJpYXQiOjE1NzQyNDc2MDR9.1MzrKtyysixLjiBUj8lgE2Sxo2hxxPdoRC-OohYX1Yw",
+        "user": {
+            "_id": "5dd510a3638cf423248067c2",
+            "name": "Seun96",
+            "email": "ajibolarichard@gmail.com"
+        }
+    }
+}
+Get Specific user => /api/users/{user ID} GET
+
+delete user => Get Specific user => /api/users/{user ID} DELETE
+__USER
+
+
+
+
+__BLOG
+Get all blog => /api/blog GET
+
+create post (multipart/form-data) =>/api/blog (params title, text, photo, author) POST
+
+get specific post => /api/blog/{post ID} GET
+
+delete blog post => /api/blog/{post ID} DELETE
+
+update post (multipart/form-data) =>/api/blog/{post ID} {params title, text, photo, author} PUT
+
+get post photo => /api/blogPhoto/{post ID} GET
+
+
+__userId from save auth
+comment on post => /api/comment (params comment, userId, blogId} PUT
+
+delete comment => /api/comment {params: blogId, commentId} DELETE
+
+reply to comment => /api/replycomment {params: commentId, comment, userId} PUT
+
+delete a reply => /api/replycomment {params replyId} DELETE
+__userId from auth
+__BLOG
+
+
+
+
+__COMMUNITY
+Get all forum post => /api/forum GET
+
+__postedBy(userId) from save auth
+create forum post (multipart/form-data) =>/api/forum (params title, text, category, postedBy,  photo) POST
+
+get specific post => /api/forum/{post ID} GET
+
+update forum post (multipart/form-data) =>/api/blog (params title, text, category, postedBy,  photo) PUT
+
+delete forum post => /api/forum/{post ID} DELETE
+
+get post photo => /api/forumPhoto/{post ID}
+
+
+__userId from save auth
+comment on post => /api/message (params comment, userId, forumId} PUT
+
+delete comment => /api/message {params: forumId, commentId} DELETE
+
+reply to comment => /api/replymessage {params: commentId, comment, userId} PUT
+
+delete a reply => /api/replymessage {params replycommentId} DELETE
+
+list by user => /api/userForum {params userId} POST
+__userId from save auth
+
+list by category => /api/category {params category} POST
+__COMMUNITY

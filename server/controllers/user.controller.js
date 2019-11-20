@@ -3,19 +3,39 @@ import _ from 'lodash';
 import errorHandler from './../helpers/dbErrorHandler';
 import formidable from 'formidable';
 import fs from 'fs';
+import profileImage from './assets/profile_image.png';
+
 
 const create = (req, res, next) => {
-  const user = new User(req.body);
-  user.save((err, result) => {
+
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err)
+        error: "Photo could not be uploaded"
       });
     }
-    res.status(200).json({
-      message: "Successfully signed up!"
-    });
+    var user = new User(fields);
+    if (files.photo) {
+      user.photo.data = fs.readFileSync(files.photo.path);
+      user.photo.contentType = files.photo.type;
+    }
+
+    user.save(function (err) {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        return res.status(200).json({
+          message: "Successfully signed up!"
+        });
+      }
+    })
+
   });
+
 }
 
 const userByID = (req, res, next, id) => {
@@ -46,20 +66,54 @@ const list = (req, res) => {
   }).select('name email updated created');
 }
 
+const photo = (req, res, next) => {
+  if(req.profile.photo.data){
+    res.set("Content-Type", req.profile.photo.contentType);
+    return res.send(req.profile.photo.data);
+  }
+
+  next();
+}
+
+const defaultPhoto = (req, res) => {
+  return res.sendFile(process.cwd()+profileImage);
+}
+
 const update = (req, res, next) => {
-  let user = req.profile;
-  user = _.extend(user, fields);
-  user.updated = Date.now();
-  user.save((err, result) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+
+  
+  form.parse(req, (err, fields, files) => {
+    
     if (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err)
+        error: "Photo could not be uploaded"
       });
     }
-    user.hashed_password = undefined;
-    user.salt = undefined;
-    res.json(user);
+
+    var user = req.profile;
+    user = _.extend(user, fields);
+    user.updated = Date.now();
+
+    if (files.photo) {
+      user.photo.data = fs.readFileSync(files.photo.path);
+      user.photo.contentType = files.photo.type;
+    }
+
+    user.save((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
+      user.hashed_password = undefined;
+      user.salt = undefined;
+      res.json(user);
+    });
+
   });
+
 }
 
 const remove = (req, res, next) => {
@@ -84,4 +138,6 @@ export default {
   list,
   remove,
   update,
+  photo,
+  defaultPhoto
 }

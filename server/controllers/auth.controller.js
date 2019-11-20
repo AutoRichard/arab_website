@@ -5,7 +5,7 @@ import config from './../../config'
 
 const signin = (req, res) => {
   User.findOne({
-    "email": req.body.email
+    "email": req.body.email 
   }, (err, user) => {
 
     if (err || !user)
@@ -40,7 +40,7 @@ const signout = (req, res) => {
   return res.status('200').json({
     message: "signed out"
   });
-}
+} 
 
 const requireSignin = expressJwt({
   secret: config.jwtSecret,

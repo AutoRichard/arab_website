@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import errorHandler from './../helpers/dbErrorHandler';
+import formidable from 'formidable';
 import Forum from '../models/forum.model';
 
 /*
@@ -8,24 +9,37 @@ function paginate(pageNumber, nPerPage){
 }
 */
 
-
-
 //creat: title, text, category, postedBy(userId), --comment-- 
 const create = (req, res, next) => {
 
-    var forumModel = new Forum(req.body);
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
 
-    forumModel.save(function (err) {
+    form.parse(req, (err, fields, files) => {
         if (err) {
-            return res.status(500).json({
-                error: 'Forum Creation Failed'
-            });
-        } else {
-            return res.status(200).json({
-                message: 'Forum Created'
+            return res.status(400).json({
+                error: "Photo could not be uploaded"
             });
         }
-    })
+
+        let forumModel = new Forum(fields);
+        if (files.photo) {
+            forumModel.photo.data = fs.readFileSync(files.photo.path);
+            forumModel.photo.contentType = files.photo.type;
+        }
+
+        forumModel.save(function (err) {
+            if (err) {
+                return res.status(500).json({
+                    error: 'Forum Creation Failed'
+                });
+            } else {
+                return res.status(200).json({
+                    message: 'Forum Created'
+                });
+            }
+        })
+    });
 }
 
 //list all forum
@@ -56,17 +70,41 @@ const forumByID = (req, res, next, id) => {
 
 //update: title, text, category, postedBy(userId)
 const update = (req, res, next) => {
-    let forum = req.details;
-    forum = _.extend(forum, req.body);
-    forum.updated = Date.now();
-    forum.save((err, result) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+
+    form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: errorHandler.getErrorMessage(err)
+                error: "Photo could not be uploaded"
             });
         }
-        res.json(forum);
+
+        let forum = req.details;
+        forum = _.extend(forum, fields);
+        forum.updated = Date.now();
+
+        if (files.photo) {
+            forum.photo.data = fs.readFileSync(files.photo.path);
+            forum.photo.contentType = files.photo.type;
+        }
+
+        forum.save((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler.getErrorMessage(err)
+                });
+            }
+            res.json(forum);
+        });
+
     });
+
+}
+
+const photo = (req, res) => {
+    res.set("Content-Type", "req.details.photo.contentType");
+    res.send(res.details.photo.data);
 }
 
 //return specific forum
@@ -151,11 +189,11 @@ const _postMessage = (req, res) => {
         })
 }
 
-//commentId and blogId
+//commentId and forumgId
 const _deleteMessage = (req, res) => {
     let commentId = req.body.commentId;
 
-    Forum.findByIdAndUpdate(req.body.blogId, { $pull: { comments: { _id: commentId } } }, { new: true })
+    Forum.findByIdAndUpdate(req.body.forumId, { $pull: { comments: { _id: commentId } } }, { new: true })
         .exec((err, result) => {
             if (err) {
                 return res.status(400).json({
@@ -203,5 +241,5 @@ const _replyDeleteMessage = (req, res) => {
 
 
 export default {
-    create, list, forumByID, update, read, remove, _postMessage, _deleteMessage, _replyMessage, _replyDeleteMessage, listCategory, listForumByCategory, listForumByUser
+    create, list, photo, forumByID, update, read, remove, _postMessage, _deleteMessage, _replyMessage, _replyDeleteMessage, listCategory, listForumByCategory, listForumByUser
 }

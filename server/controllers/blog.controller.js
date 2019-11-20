@@ -24,7 +24,7 @@ const create = (req, res, next) => {
 
         blogModel.save(function (err) {
             if (err) {
-                return res.status(500).json({
+                return res.status(400).json({
                     error: 'Blog Creation Failed'
                 });
             } else {
@@ -42,9 +42,9 @@ const create = (req, res, next) => {
 }
 
 //return {photo}
-const photo = (req, res, next) => {
+const photo = (req, res) => {
     res.set("Content-Type", req.details.photo.contentType);
-    return res.send(req.details.photo.data)
+    return res.send(req.details.photo.data);
 }
 
 //return {title text author and _id}
@@ -63,7 +63,6 @@ const list = (req, res) => {
 //return from blog table {:blogId}
 const blogByID = (req, res, next, id) => {
     Blog.findById(id)
-        .select('title text author comments createDate')
         .exec((err, blog) => {
             if (err || !blog) return res.status('400').json({
                 error: "BLog not found"

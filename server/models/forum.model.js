@@ -31,6 +31,10 @@ const ForumSchema = new mongoose.Schema({
         type: String,
         required: 'Category is required'
     },
+    photo : {
+        data: Buffer,
+        contentType: String
+    },
     postedBy : {
         type: mongoose.Schema.ObjectId, ref: 'User'
     }
