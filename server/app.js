@@ -6,30 +6,16 @@ import cors from 'cors';
 import helmet from 'helmet';
 import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route'; 
-//import blogRoutes from './routes/blog.route';
-import blogRoutes from './routes/forum.route';
+import blogRoutes from './routes/blog.route';
+import forumRoutes from './routes/forum.route';
 
 
 const app = express();
 
-app.use(function (req, res, next) {
-  /*var err = new Error('Not Found');
-   err.status = 404;
-   next(err);*/
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
-
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-  // Pass to next layer of middleware
-  next();
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.use(bodyParser.json());
@@ -42,11 +28,10 @@ app.use(cors());
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 app.use('/', blogRoutes);
+app.use('/', forumRoutes);
 app.get('/', (req, res) => {
   console.log(1);
-})
-
-
+});
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {

@@ -2,12 +2,12 @@ import express from 'express';
 import authCtrl from '../controllers/auth.controller';
 import forumCtrl from '../controllers/forum.controller';
 
-const router = express.Router(); 
+const router = express.Router();
 
 //create new forum and list all
 router.route('/api/forum')
-  .get(forumCtrl.list)
-  .post(forumCtrl.create);
+  .get(authCtrl.requireSignin, forumCtrl.list)
+  .post(authCtrl.requireSignin, forumCtrl.create);
 
 //read specific forum, update and delete
 router.route('/api/forum/:forumId')
