@@ -6,7 +6,7 @@ const router = express.Router();
 
 //create new forum and list all
 router.route('/api/forum')
-  .get(authCtrl.requireSignin, forumCtrl.list)
+  .get(forumCtrl.list)
   .post(forumCtrl.create);
 
 //read specific forum, update and delete

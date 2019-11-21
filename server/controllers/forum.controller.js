@@ -2,6 +2,7 @@ import _ from 'lodash';
 import errorHandler from './../helpers/dbErrorHandler';
 import formidable from 'formidable';
 import Forum from '../models/forum.model';
+import fs from 'fs';
 
 /*
 function paginate(pageNumber, nPerPage){

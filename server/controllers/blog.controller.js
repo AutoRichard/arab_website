@@ -2,7 +2,7 @@ import _ from 'lodash';
 import errorHandler from './../helpers/dbErrorHandler';
 import Blog from '../models/blog.model';
 import formidable from 'formidable';
-import fs from 'fs';
+import fs from 'fs'; 
 
 
 //save {title, text, photo, author, --comment-- & -createDate-} 
