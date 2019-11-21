@@ -27,7 +27,6 @@ app.use(cors());
 
 app.use('/', userRoutes);
 app.use('/', authRoutes);
-app.use('/', blogRoutes);
 app.use('/', forumRoute);
 app.get('/', (req, res) => {
   console.log(1);
