@@ -8,7 +8,7 @@ const router = express.Router();
 //craete and list blog 
 router.route('/api/blog')
   .get(authCtrl.requireSignin, blogCtrl.list)
-  .post(authCtrl.requireSignin, blogCtrl.create);
+  .post(blogCtrl.create);
 
 //single blog, update, and delete
 router.route('/api/blog/:blogId')
