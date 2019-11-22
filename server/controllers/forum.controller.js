@@ -104,8 +104,11 @@ const update = (req, res, next) => {
 }
 
 const photo = (req, res) => {
-    res.set("Content-Type", req.details.photo.contentType);
-    return res.send(req.details.photo.data);
+    req.details.photo = undefined;
+    return res.json(req.details);
+
+    //res.set("Content-Type", req.details.photo.contentType);
+    //return res.send(req.details.photo.data);
 }
 
 //return specific forum
