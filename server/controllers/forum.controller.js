@@ -104,7 +104,7 @@ const update = (req, res, next) => {
 }
 
 const photo = (req, res) => {
-    res.set("Content-Type", req.details.photo.contentType); 
+    res.set("Content-Type", req.details.photo.contentType);
     return res.send(req.details.photo.data);
 }
 
