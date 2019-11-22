@@ -36,7 +36,7 @@ router.route('/api/category')
 router.route('/api/userForum')
   .post(authCtrl.requireSignin, forumCtrl.listForumByUser);
 
-router.route('/api/forumPhoto/:blogId')
+router.route('/api/forumPhoto/:forumId')
   .get(forumCtrl.photo);
 
 
