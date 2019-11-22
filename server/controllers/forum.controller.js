@@ -59,6 +59,8 @@ const list = (req, res) => {
 //return specific forum
 const forumByID = (req, res, next, id) => {
     Forum.findById(id)
+        .populate('comments.replyComment.postedBy', '_id name')
+        .populate('comments.postedBy', '_id name')
         .populate('postedBy', '_id name')
         .exec((err, forum) => {
             if (err || !forum) return res.status('400').json({

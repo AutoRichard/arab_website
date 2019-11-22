@@ -63,6 +63,8 @@ const list = (req, res) => {
 //return from blog table {:blogId}
 const blogByID = (req, res, next, id) => {
     Blog.findById(id)
+        .populate('comments.replyComment.postedBy', '_id name')
+        .populate('comments.postedBy', '_id name')
         .exec((err, blog) => {
             if (err || !blog) return res.status('400').json({
                 error: "BLog not found"
