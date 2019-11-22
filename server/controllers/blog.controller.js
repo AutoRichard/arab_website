@@ -104,6 +104,7 @@ const update = (req, res, next) => {
 
 //return single blog 
 const read = (req, res) => {
+    req.details.photo = undefined;
     return res.json(req.details);
 }
 
