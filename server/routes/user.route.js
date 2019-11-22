@@ -16,7 +16,7 @@ router.route('/api/users/:userId')
 
 
 router.route('/api/usersPhoto/:userId')
-  .get(authCtrl.requireSignin, userCtrl.photo, userCtrl.defaultPhoto);
+  .get(userCtrl.photo, userCtrl.defaultPhoto);
 
 router.param('userId', userCtrl.userByID);
 

@@ -37,7 +37,7 @@ router.route('/api/userForum')
   .post(authCtrl.requireSignin, forumCtrl.listForumByUser);
 
 router.route('/api/forumPhoto/:blogId')
-  .get(authCtrl.requireSignin, forumCtrl.photo);
+  .get(forumCtrl.photo);
 
 
 //fetch specific forum
