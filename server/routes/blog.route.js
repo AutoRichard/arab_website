@@ -3,7 +3,7 @@ import authCtrl from '../controllers/auth.controller';
 import blogCtrl from '../controllers/blog.controller';
 
 const router = express.Router();
-
+ 
 
 //craete and list blog 
 router.route('/api/blog')
@@ -14,7 +14,7 @@ router.route('/api/blog')
 router.route('/api/blog/:blogId')
   .get(authCtrl.requireSignin, blogCtrl.read)
   .put(authCtrl.requireSignin, blogCtrl.update)
-  .delete(authCtrl.requireSignin, blogCtrl.remove);
+  .delete(authCtrl.requireSignin, blogCtrl.remove); 
 
 //comment to a single blog and delete
 router.route('/api/comment')
