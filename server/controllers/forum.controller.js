@@ -112,7 +112,6 @@ const photo = (req, res) => {
 
 //return specific forum
 const read = (req, res) => {
-    req.details.photo = undefined;
     return res.json(req.details);
 }
 
