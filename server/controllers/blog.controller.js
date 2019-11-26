@@ -84,10 +84,7 @@ const update = (req, res, next) => {
             res.status(400).json({
                 error: "Photo could not be uploaded"
             });
-        }
-        res.status(200).json({
-            error: fields
-        });        
+        }    
         var blog = req.details;
         blog = _.extend(blog, fields);
         blog.updated = Date.now();
