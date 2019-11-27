@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
  
 
 const transcriptSchema = new mongoose.Schema({
-    videoId: {
-        type: String,
-        required: 'Video Id is required'
-    },
     startTime: {
         type: Number,
         default: 0
@@ -24,7 +20,10 @@ const transcriptSchema = new mongoose.Schema({
     },
     meaning: {
         type: String,
-        required: 'Meaning is required'
+       required: 'Meaning is required'
+    },
+    videoId: {
+        type: mongoose.Schema.ObjectId, ref: 'Video'
     }
 });
 

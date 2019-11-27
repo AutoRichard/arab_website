@@ -9,6 +9,9 @@ router.route('/api/transcript')
     .get(authCtrl.requireSignin, transcriptCtrl.list)
     .post(authCtrl.requireSignin, transcriptCtrl.create);
 
+router.route('/api/video/transcript')
+    .post(authCtrl.requireSignin, transcriptCtrl.transcriptByVideoId);
+
 
 router.route('/api/transcript/:transcriptId')
     .get(authCtrl.requireSignin, transcriptCtrl.read)

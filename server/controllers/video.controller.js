@@ -51,7 +51,7 @@ const list = (req, res) => {
             });
         }
         res.json(video);
-    }).select('videoId dialect rating videoTitle level');
+    }).select('youtubVideoId dialect rating videoTitle level');
 }
 
 //return from video table {:videoId}

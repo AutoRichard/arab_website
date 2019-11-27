@@ -40,14 +40,14 @@ const list = (req, res) => {
             });
         }
         res.json(transcript);
-    });
+    }).populate('videoId', '_id videoTitle');
 }
 
 //return transcript by {transcriptId}
 const transcriptByID = (req, res, next, id) => {
     Transcript.findById(id)
-        .exec((err, transcript) =>{
-            if(err || !transcript){
+        .exec((err, transcript) => {
+            if (err || !transcript) {
                 return res.status(400).json({
                     error: "Transcript not found"
                 });
@@ -70,7 +70,7 @@ const update = (req, res, next) => {
     form.keepExtensions = true;
 
     form.parse(req, (err, fields, files) => {
-        if(err){
+        if (err) {
             return res.status(400).json({
                 error: "Transcript could not be uploaded"
             });
@@ -81,7 +81,7 @@ const update = (req, res, next) => {
         transcript.updated = Date.now();
 
         transcript.save((err, result) => {
-            if(err){
+            if (err) {
                 return res.status(400).json({
                     error: errorHandler.getErrorMessage(err)
                 });
@@ -95,7 +95,7 @@ const update = (req, res, next) => {
 const remove = (req, res, next) => {
     let video = req.details;
     video.remove((err, deletedTranscript) => {
-        if(err){
+        if (err) {
             return res.status(400).json({
                 error: errorHandler.getErrorMessage(err)
             });
@@ -104,6 +104,23 @@ const remove = (req, res, next) => {
     });
 };
 
+const transcriptByVideoId = (req, res) => {
+    
+    let videoId = req.body.videoId;
+    let type = req.body.type;
+
+    Transcript.find({ "videoId": videoId, "type": type })
+        .populate('videoId', '_id videoTitle')
+        .exec((err, transcript) => {
+            if (err || !transcript) {
+                return res.status(400).json({
+                    error: "Transcript not found"
+                });
+            }
+            res.json(transcript);
+        });
+}
+
 export default {
-    create, list, transcriptByID, read, update, remove
+    create, list, transcriptByID, read, update, remove, transcriptByVideoId
 }
