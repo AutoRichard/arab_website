@@ -70,9 +70,9 @@ const videoByID = (req, res, next, id) => {
 
 //return {thumbnail}
 const thumbnail = (req, res) => {
-    res.set("Content-Type", req.details.photo.contentType);
-    return res.send(req.details.photo.data);
-}
+    res.set("Content-Type", req.details.thumbnail.contentType);
+    return res.send(req.details.thumbnail.data);
+} 
 
 //save {videoId, thumbnail, dialect, rating, videolTitle, level}
 const update = (req, res, next) => {
