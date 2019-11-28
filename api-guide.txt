@@ -87,3 +87,33 @@ __userId from save auth
 
 list by category => /api/category {params category} POST
 __COMMUNITY
+
+
+__Video
+Get all video post => /api/video GET
+
+create video post =>/api/video (params youtubeId, thumbnail, dialect, rating,  videoTitle, level) POST
+
+get specific video => /api/video/{post ID} GET
+
+update video post =>/api/video/{post ID} (params title, text, category, postedBy,  photo) PUT
+
+delete video post => /api/video/{post ID} DELETE
+
+get post photo => /api/videoThumbnail/{post ID}
+__Video
+
+
+__Transcript
+Get all transcript post => /api/transcript GET
+
+create transcript post =>/api/transcript (params videoId, startTime, endTime, type,  transcript, meaning) POST
+
+get specific transcript => /api/transcript/{post ID} GET
+
+update transcript post => /api/transcript/{post ID} (params videoId, startTime, endTime, type,  transcript, meaning) PUT
+
+delete transcript post => /api/transcript/{post ID}
+
+Fetch video transcript by videoId and type(application/json) => rootUrl/api/video/transcript  (params: videoId, type) POST
+__Transcript

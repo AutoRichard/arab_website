@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
  
 const videoSchema = new mongoose.Schema({
-    youtubeVideoId: {
+    youtubeId: {
         type: String,
         required: 'Youtube Video Id is required'
     },
