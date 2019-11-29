@@ -22,6 +22,10 @@ const create = (req, res, next) => {
       user.photo.contentType = files.photo.type;
     }
 
+    return res.status(200).json({
+      details: fields
+    });
+
     user.save(function (err) {
       if (err) {
         return res.status(400).json({
