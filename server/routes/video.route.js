@@ -6,12 +6,12 @@ import videoCtrl from '../controllers/video.controller';
 const router = express.Router(); 
 
 router.route('/api/video')
-    .get(authCtrl.requireSignin, videoCtrl.list)
+    .get(videoCtrl.list)
     .post(authCtrl.requireSignin, videoCtrl.create);
 
 
 router.route('/api/video/:videoId')
-    .get(authCtrl.requireSignin, videoCtrl.read)
+    .get(videoCtrl.read)
     .put(authCtrl.requireSignin, videoCtrl.update)
     .delete(authCtrl.requireSignin, videoCtrl.remove);
 
