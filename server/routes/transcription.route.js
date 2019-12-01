@@ -6,15 +6,15 @@ import transcriptCtrl from '../controllers/transcription.controller';
 const router = express.Router();
 
 router.route('/api/transcript')
-    .get(authCtrl.requireSignin, transcriptCtrl.list)
+    .get(transcriptCtrl.list)
     .post(authCtrl.requireSignin, transcriptCtrl.create);
 
 router.route('/api/video/transcript')
-    .post(authCtrl.requireSignin, transcriptCtrl.transcriptByVideoId);
+    .post(transcriptCtrl.transcriptByVideoId);
 
 
 router.route('/api/transcript/:transcriptId')
-    .get(authCtrl.requireSignin, transcriptCtrl.read)
+    .get(transcriptCtrl.read)
     .put(authCtrl.requireSignin, transcriptCtrl.update)
     .delete(authCtrl.requireSignin, transcriptCtrl.remove);
 
