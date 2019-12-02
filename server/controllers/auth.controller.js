@@ -27,9 +27,6 @@ const signin = (req, res) => {
       expire: new Date() + 9999
     });
 
-    user.hashed_password = undefined;
-    user.salt = undefined;
-
     return res.json({
       token, 
       user: user,
