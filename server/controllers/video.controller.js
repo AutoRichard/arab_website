@@ -155,7 +155,7 @@ const videoSearch = (req, res) => {
              });
          }
          res.json(video);
-     })
+     }).select('youtubeId dialect rating videoTitle level')
 }
 
 export default {
