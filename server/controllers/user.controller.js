@@ -7,12 +7,14 @@ import profileImage from './assets/profile_image.png';
 
 
 const create = (req, res) => {
-  return res.status(200).json({
-    error: "Photo could not be uploaded"
-  });
+  
 
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
+
+  return res.status(200).json({
+    error: "Photo could not be uploaded"
+  });
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({
