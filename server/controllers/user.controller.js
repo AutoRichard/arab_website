@@ -6,11 +6,10 @@ import fs from 'fs';
 import profileImage from './assets/profile_image.png';
 
 
-const create = (req, res) => {
-
+const create = (req, res, next) => {
 
   let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
+  form.keepExtensions = true;  
 
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -18,11 +17,8 @@ const create = (req, res) => {
         error: "Photo could not be uploaded"
       });
     }
-    
-    var user = new User(fields);
-    return res.status(200).json({
-      error: "Photo could not be uploadeds"
-    });
+
+    var user = new User(fields);    
     if (files.photo) {
       user.photo.data = fs.readFileSync(files.photo.path);
       user.photo.contentType = files.photo.type;
