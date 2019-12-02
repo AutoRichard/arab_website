@@ -30,7 +30,7 @@ const signin = (req, res) => {
     return res.json({
       token, 
       user: {_id: user._id, name: user.name, email: user.email, accountType: user.accountType, first_name: user.first_name, last_name: user.last_name}
-    })
+    });
 
   })
 }

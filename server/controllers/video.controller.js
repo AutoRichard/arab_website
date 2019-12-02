@@ -142,6 +142,10 @@ const videoByDialect = (req, res) => {
         });
 }
 
+//video search
+const videoSearch = (req, res) => {
+    
+}
 
 export default {
     create, list, videoByID, thumbnail, update, read, remove, videoByDialect
