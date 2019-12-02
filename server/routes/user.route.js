@@ -15,7 +15,7 @@ router.route('/api/users/:userId')
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
 
 router.route('/api/password/:userId')
-  .get(userCtrl.updatePassword)
+  .get(authCtrl.requireSignin, userCtrl.updatePassword)
 
 
 router.route('/api/usersPhoto/:userId')
