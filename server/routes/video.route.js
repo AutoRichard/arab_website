@@ -3,7 +3,7 @@ import authCtrl from '../controllers/auth.controller';
 import videoCtrl from '../controllers/video.controller';
 
 
-const router = express.Router(); 
+const router = express.Router();
 
 router.route('/api/video')
     .get(videoCtrl.list)
@@ -18,6 +18,9 @@ router.route('/api/video/:videoId')
 
 router.route('/api/videoThumbnail/:videoId')
     .get(videoCtrl.thumbnail);
+
+router.route('/api/videoDialect')
+    .post(videoCtrl.videoByDialect);
 
 
 router.param('videoId', videoCtrl.videoByID);

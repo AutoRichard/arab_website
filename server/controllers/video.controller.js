@@ -72,7 +72,7 @@ const videoByID = (req, res, next, id) => {
 const thumbnail = (req, res) => {
     res.set("Content-Type", req.details.thumbnail.contentType);
     return res.send(req.details.thumbnail.data);
-} 
+}
 
 //save {videoId, thumbnail, dialect, rating, videolTitle, level}
 const update = (req, res, next) => {
@@ -80,7 +80,7 @@ const update = (req, res, next) => {
     form.keepExtensions = true;
 
     form.parse(req, (err, fields, files) => {
-        if(err){
+        if (err) {
             return res.status(400).json({
                 error: "Photo could not be uploaded"
             });
@@ -90,13 +90,13 @@ const update = (req, res, next) => {
         video = _.extend(video, fields);
         video.updated = Date.now();
 
-        if(files.thumbnail){
+        if (files.thumbnail) {
             video.thumbnail.data = fs.readFileSync(files.thumbnail.path);
             video.thumbnail.contentType = files.thumbnail.type;
         }
 
         video.save((err, result) => {
-            if(err){
+            if (err) {
                 return res.status(400).json({
                     error: errorHandler.getErrorMessage(err)
                 });
@@ -117,7 +117,7 @@ const read = (req, res) => {
 const remove = (req, res, next) => {
     let video = req.details;
     video.remove((err, deletedVideo) => {
-        if(err) {
+        if (err) {
             return res.status(400).json({
                 error: errorHandler.getErrorMessage(err)
             });
@@ -126,7 +126,23 @@ const remove = (req, res, next) => {
     })
 }
 
+//video by dialect
+const videoByDialect = (req, res) => {
+    let dialect = req.body.dialect;
+
+    Video.find({ "dialect": dialect })
+        .exec((err, dialect) => {
+            if(err || !dialect){
+                return res.status(400).json({
+                    error: "Video not found"
+                });
+            }
+
+            res.json(dialect);
+        });
+}
+
 
 export default {
-    create, list, videoByID, thumbnail, update, read, remove
+    create, list, videoByID, thumbnail, update, read, remove, videoByDialect
 }
