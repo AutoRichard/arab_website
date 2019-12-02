@@ -135,11 +135,7 @@ const remove = (req, res, next) => {
 const updatePassword = (req, res, next) => {
   let user = req.profile;
 
-  return res.status('200').send({
-    user: user
-  });
-
-  if (!user.authenticate(req.body.password)) {
+  if (!user.authenticate(req.query.password)) {
     return res.status('401').send({
       error: "Email and password don't match."
     });
