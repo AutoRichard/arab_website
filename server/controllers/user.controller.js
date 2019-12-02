@@ -135,12 +135,12 @@ const remove = (req, res, next) => {
 const updatePassword = (req, res, next) => {
   let user = req.profile;
 
-  if (!user.authenticate(req.query.password)) {
+  if (!user.authenticate(req.query.oldPassword)) {
     return res.status('401').send({
       error: "Invalid Password"
     });
   } else {
-    user = _.extend(user, req.quert)
+    user = _.extend(user, req.query)
     user.updated = Date.now()
     user.save((err) => {
       if (err) {
