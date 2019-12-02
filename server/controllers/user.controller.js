@@ -7,26 +7,26 @@ import profileImage from './assets/profile_image.png';
 
 
 const create = (req, res) => {
-  
+
 
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
-  return res.status(200).json({
-    error: "Photo could not be uploaded"
-  });
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({
         error: "Photo could not be uploaded"
       });
     }
+    return res.status(200).json({
+      error: "Photo could not be uploadeds"
+    });
     var user = new User(fields);
     if (files.photo) {
       user.photo.data = fs.readFileSync(files.photo.path);
       user.photo.contentType = files.photo.type;
     }
-    
+
     user.save(function (err) {
       if (err) {
         return res.status(400).json({
@@ -73,7 +73,7 @@ const list = (req, res) => {
 }
 
 const photo = (req, res, next) => {
-  if(req.profile.photo.data){
+  if (req.profile.photo.data) {
     res.set("Content-Type", req.profile.photo.contentType);
     return res.send(req.profile.photo.data);
   }
@@ -82,16 +82,16 @@ const photo = (req, res, next) => {
 }
 
 const defaultPhoto = (req, res) => {
-  return res.sendFile(process.cwd()+profileImage);
+  return res.sendFile(process.cwd() + profileImage);
 }
 
 const update = (req, res, next) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
-   
+
   form.parse(req, (err, fields, files) => {
-    
+
     if (err) {
       return res.status(400).json({
         error: "Photo could not be uploaded"
