@@ -9,7 +9,7 @@ import profileImage from './assets/profile_image.png';
 const create = (req, res, next) => {
 
   let form = new formidable.IncomingForm();
-  form.keepExtensions = true;  
+  form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -18,12 +18,12 @@ const create = (req, res, next) => {
       });
     }
 
-    var user = new User(fields);    
+    var user = new User(fields);
     if (files.photo) {
       user.photo.data = fs.readFileSync(files.photo.path);
       user.photo.contentType = files.photo.type;
     }
-        user.save(function (err) {
+    user.save(function (err) {
       if (err) {
         return res.status(400).json({
           error: errorHandler.getErrorMessage(err)
@@ -132,6 +132,20 @@ const remove = (req, res, next) => {
   })
 }
 
+const updatePassword = (req, res, next) => {
+  let user = req.profile;
+
+  if (!user.authenticate(req.body.password)) {
+    return res.status('401').send({
+      error: "Email and password don't match."
+    });
+  }else{
+    return res.status('200').send({
+      succes: "Match"
+    });
+  }
+}
+
 
 export default {
   create,
@@ -141,5 +155,6 @@ export default {
   remove,
   update,
   photo,
-  defaultPhoto
+  defaultPhoto,
+  updatePassword
 }

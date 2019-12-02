@@ -17,7 +17,7 @@ const signin = (req, res) => {
       return res.status('401').send({
         error: "Email and password don't match."
       });
-    }
+    } 
 
     const token = jwt.sign({
       _id: user._id
