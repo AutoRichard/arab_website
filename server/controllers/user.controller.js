@@ -136,7 +136,7 @@ const updatePassword = (req, res, next) => {
   let user = req.profile;
 
   if (!user.authenticate(req.query.oldPassword)) {
-    return res.status('401').send({
+    return res.send({
       error: "Invalid Password"
     });
   } else {
