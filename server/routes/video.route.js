@@ -22,6 +22,9 @@ router.route('/api/videoThumbnail/:videoId')
 router.route('/api/videoDialect')
     .post(videoCtrl.videoByDialect);
 
+router.route('/api/searchVideo')
+    .get(videoCtrl.videoSearch)
+
 
 router.param('videoId', videoCtrl.videoByID);
 

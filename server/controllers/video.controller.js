@@ -132,7 +132,7 @@ const videoByDialect = (req, res) => {
 
     Video.find({ "dialect": dialect })
         .exec((err, dialect) => {
-            if(err || !dialect){
+            if (err || !dialect) {
                 return res.status(400).json({
                     error: "Video not found"
                 });
@@ -144,9 +144,20 @@ const videoByDialect = (req, res) => {
 
 //video search
 const videoSearch = (req, res) => {
-    
+    const query = {}
+    if (req.query.search)
+     query.videoTitle = {'$regex': req.query.search, '$options': 'i'}
+
+     Video.find(query, (err, video) => {
+         if(err){
+             return res.status().json({
+                 error: errorHandler.getErrorMessage(err)
+             });
+         }
+         res.json(video);
+     })
 }
 
 export default {
-    create, list, videoByID, thumbnail, update, read, remove, videoByDialect
+    create, list, videoByID, thumbnail, update, read, remove, videoByDialect, videoSearch
 }
