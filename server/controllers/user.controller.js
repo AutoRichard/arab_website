@@ -18,16 +18,16 @@ const create = (req, res) => {
         error: "Photo could not be uploaded"
       });
     }
+    
+    var user = new User(fields);
     return res.status(200).json({
       error: "Photo could not be uploadeds"
     });
-    var user = new User(fields);
     if (files.photo) {
       user.photo.data = fs.readFileSync(files.photo.path);
       user.photo.contentType = files.photo.type;
     }
-
-    user.save(function (err) {
+        user.save(function (err) {
       if (err) {
         return res.status(400).json({
           error: errorHandler.getErrorMessage(err)
