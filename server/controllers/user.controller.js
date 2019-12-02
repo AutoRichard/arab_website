@@ -137,11 +137,20 @@ const updatePassword = (req, res, next) => {
 
   if (!user.authenticate(req.query.password)) {
     return res.status('401').send({
-      error: "Email and password don't match."
+      error: "Invalid Password"
     });
-  }else{
-    return res.status('200').send({
-      succes: "Match"
+  } else {
+    user = _.extend(user, req.quert)
+    user.updated = Date.now()
+    user.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        })
+      }
+      user.hashed_password = undefined
+      user.salt = undefined
+      res.json(user)
     });
   }
 }
