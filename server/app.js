@@ -10,6 +10,7 @@ import blogRoutes from './routes/blog.route';
 import forumRoutes from './routes/forum.route';
 import videoRoutes from './routes/video.route';
 import transcriptRoutes from './routes/transcription.route';
+import contactRoutes from './routes/contact.route';
 
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/', blogRoutes);
 app.use('/', forumRoutes);
 app.use('/', videoRoutes);
 app.use('/', transcriptRoutes);
+app.use('/', contactRoutes);
 /*app.get('/', (req, res) => {
   console.log(1);
 });*/

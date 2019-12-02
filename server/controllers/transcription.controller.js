@@ -102,7 +102,7 @@ const remove = (req, res, next) => {
         }
         res.json(deletedTranscript);
     });
-};
+}
 
 const transcriptByVideoId = (req, res) => {
     
