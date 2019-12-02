@@ -25,11 +25,14 @@ const signin = (req, res) => {
 
     res.cookie("t", token, {
       expire: new Date() + 9999
-    })
+    });
+
+    user.hashed_password = undefined;
+    user.salt = undefined;
 
     return res.json({
-      token,
-      user: {_id: user._id, name: user.name, email: user.email, accountType: user.accountType}
+      token, 
+      user: user,
     })
 
   })
